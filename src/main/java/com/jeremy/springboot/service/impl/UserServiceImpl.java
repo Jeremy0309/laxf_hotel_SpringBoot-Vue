@@ -5,6 +5,7 @@ import cn.hutool.log.Log;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jeremy.springboot.common.Constants;
 import com.jeremy.springboot.common.Result;
+import com.jeremy.springboot.common.RoleEnum;
 import com.jeremy.springboot.controller.vo.UserVo;
 import com.jeremy.springboot.entity.Menu;
 import com.jeremy.springboot.entity.User;
@@ -75,6 +76,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if (user == null){
             user = new User();
             BeanUtils.copyProperties(userVo,user);
+            //默认角色为普通角色
+            user.setRole(RoleEnum.ROLE_USER.toString());
             save(user);
             return user;
         }else {

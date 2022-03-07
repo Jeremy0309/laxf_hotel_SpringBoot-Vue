@@ -113,11 +113,11 @@ public class UserController {
 
     @GetMapping("/page")
     public Result findPage(@RequestParam Integer pageNum,
-                                @RequestParam Integer pageSize,
-                                @RequestParam(defaultValue = "") String username,
-                                @RequestParam(defaultValue = "") String email,
-                                @RequestParam(defaultValue = "") String address
-                                ){
+                           @RequestParam Integer pageSize,
+                           @RequestParam(defaultValue = "") String username,
+                           @RequestParam(defaultValue = "") String email,
+                           @RequestParam(defaultValue = "") String address
+    ){
         IPage<User> page = new Page<>(pageNum,pageSize);
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         if(!"".equals(username)){
@@ -144,7 +144,7 @@ public class UserController {
     @PostMapping("/check")
     public Result check(@RequestBody String token){
         System.out.println("============== token =======:" +token);
-    //校验token
+        //校验token
         try {
             DecodedJWT decodedJWT = TokenUtils.verifyToken(token);
             return Result.success(Constants.CODE_200);
