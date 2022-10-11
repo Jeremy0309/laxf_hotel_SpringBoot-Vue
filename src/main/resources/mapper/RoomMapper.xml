@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeremy.springboot.mapper.RoomMapper">
+    <sql id="Base_Column_List">
+        r_id as id, r_name as name, r_price as price, r_state as state,
+        r_position as position , r_descrption as descrption
+    </sql>
+    <!--
+select * from sys_room
+where r_id not in
+    (select room_id from sys_room_availability
+    where date_occupied>= '2022-02-25'  and date_occupied < '2022-02-26' )
+    -->
+    <!--根据日期查询房间列表数据-->
+    <select id="avaRooms" parameterType="String" resultType="com.jeremy.springboot.entity.Room">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM sys_room room
+        where r_id not in
+        (select room_id from sys_room_availability sra
+        where  sra.date_occupied >= #{startDate}  and sra.date_occupied &lt; #{endDate}
+        )
+        ORDER BY r_id DESC
+    </select>
+
+
+</mapper>
